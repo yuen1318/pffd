@@ -234,7 +234,7 @@
             outline-offset: 2px;
         }
 
-        /* ── Font Size Buttons (new, same visual style) ── */
+        /* ── Font Size Buttons ── */
         .font-size-btn {
             font-size: 1.1rem;
             font-weight: 600;
@@ -618,6 +618,7 @@
     <header class="app-header">
         <div class="app-header-left">
             <span class="app-icon">🕯️</span>
+            <span class="app-title">Prayer for the Departed</span>
         </div>
         <div class="app-header-right">
             <button class="edit-btn" id="editBtn" title="Edit name or gender" style="display:none;">
@@ -979,7 +980,7 @@
                 deceasedPronounTag.textContent = pronounLabel;
             }
 
-            // ───── Show / Hide Screens ─────────
+            // ───── Show / Hide Screens (with native back‑button support) ─────────
             function showPrayerScreen(name, pr) {
                 homeScreen.style.display = 'none';
                 prayerScreen.classList.add('active');
@@ -988,9 +989,13 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 prayerContent.setAttribute('tabindex', '-1');
                 prayerContent.focus();
+
+                // Push a history entry so the back button returns to the home screen
+                history.pushState({ screen: 'prayer' }, '', '');
             }
 
-            function showHomeScreen() {
+            // Internal function that only updates the UI (no history manipulation)
+            function goToHomeScreenUI() {
                 prayerScreen.classList.remove('active');
                 homeScreen.style.display = '';
                 editBtn.style.display = 'none';
@@ -1001,6 +1006,22 @@
                 updateBeginBtn();
                 nameInput.focus();
             }
+
+            // Public function used by edit button & escape key – delegates to history.back()
+            function showHomeScreen() {
+                if (prayerScreen.classList.contains('active')) {
+                    history.back();
+                } else {
+                    goToHomeScreenUI();
+                }
+            }
+
+            // ───── Native back‑button handling ─────────
+            window.addEventListener('popstate', () => {
+                if (prayerScreen.classList.contains('active')) {
+                    goToHomeScreenUI();
+                }
+            });
 
             // ───── Form Submission ────────────
             prayerForm.addEventListener('submit', (e) => {
