@@ -234,6 +234,14 @@
             outline-offset: 2px;
         }
 
+        /* ── Font Size Buttons (new, same visual style) ── */
+        .font-size-btn {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1;
+            user-select: none;
+        }
+
         /* ── Main Container ────────────────── */
         .main-container {
             max-width: 640px;
@@ -581,6 +589,7 @@
             .app-header,
             .edit-btn,
             .theme-toggle-btn,
+            .font-size-btn,
             .deceased-info,
             .home-screen {
                 display: none !important;
@@ -609,7 +618,6 @@
     <header class="app-header">
         <div class="app-header-left">
             <span class="app-icon">🕯️</span>
-            <span class="app-title">Prayer for the Departed</span>
         </div>
         <div class="app-header-right">
             <button class="edit-btn" id="editBtn" title="Edit name or gender" style="display:none;">
@@ -618,6 +626,9 @@
                     <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
                 </svg>
             </button>
+            <!-- Font size controls -->
+            <button class="edit-btn font-size-btn" id="fontDecreaseBtn" title="Decrease font size" aria-label="Decrease font size">−</button>
+            <button class="edit-btn font-size-btn" id="fontIncreaseBtn" title="Increase font size" aria-label="Increase font size">+</button>
             <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
                 <span class="theme-toggle-dot" id="themeToggleDot">☀️</span>
             </button>
@@ -685,6 +696,10 @@
             const nameError = document.getElementById('nameError');
             const prayerForm = document.getElementById('prayerForm');
 
+            // Font size controls
+            const fontDecreaseBtn = document.getElementById('fontDecreaseBtn');
+            const fontIncreaseBtn = document.getElementById('fontIncreaseBtn');
+
             let selectedGender = null; // 'he' or 'she'
             let currentName = '';
             let pronouns = null; // { subject, object, possessive }
@@ -700,6 +715,37 @@
             function capitalizeName(name) {
                 return toTitleCase(name.trim());
             }
+
+            // ───── Font Size Management ────────
+            function setFontSize(zoom) {
+                const clamped = Math.min(1.5, Math.max(0.8, zoom));
+                document.documentElement.style.fontSize = `${clamped * 100}%`;
+                try {
+                    localStorage.setItem('prayer-font-size', clamped.toString());
+                } catch (e) {}
+                return clamped;
+            }
+
+            function getStoredFontSize() {
+                try {
+                    const val = localStorage.getItem('prayer-font-size');
+                    return val ? parseFloat(val) : null;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            // Initialize font size
+            const savedFontSize = getStoredFontSize();
+            let currentFontZoom = savedFontSize !== null ? savedFontSize : 1.0;
+            setFontSize(currentFontZoom);
+
+            fontIncreaseBtn.addEventListener('click', () => {
+                currentFontZoom = setFontSize(currentFontZoom + 0.1);
+            });
+            fontDecreaseBtn.addEventListener('click', () => {
+                currentFontZoom = setFontSize(currentFontZoom - 0.1);
+            });
 
             // ───── Theme Management ───────────
             function applyTheme(isDark) {
