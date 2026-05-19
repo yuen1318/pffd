@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer for the Faithful Departed</title>
+
+    <!-- Google Font: Raleway -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           CALM GRAY TONED DESIGN (shadcn inspired)
+        ========================================= */
+        :root {
+            /* Light mode – neutral grays */
+            --background: 0 0% 100%;
+            --foreground: 0 0% 15%;
+            --card: 0 0% 100%;
+            --card-foreground: 0 0% 15%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 0 0% 15%;
+            --primary: 0 0% 25%;            /* dark charcoal */
+            --primary-foreground: 0 0% 98%;
+            --secondary: 0 0% 96%;
+            --secondary-foreground: 0 0% 20%;
+            --muted: 0 0% 96%;
+            --muted-foreground: 0 0% 45%;
+            --accent: 0 0% 94%;
+            --accent-foreground: 0 0% 20%;
+            --destructive: 0 72% 50%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 0 0% 88%;
+            --input: 0 0% 88%;
+            --ring: 0 0% 25%;
+            --radius: 0.5rem;
+
+            /* Prayer segment shades */
+            --leader-bg: 0 0% 95%;
+            --leader-border: 0 0% 40%;
+            --all-bg: 0 0% 92%;
+            --all-border: 0 0% 55%;
+            --reading-bg: 0 0% 98%;
+            --reading-border: 0 0% 82%;
+            --section-text: 0 0% 30%;
+            --narration-text: 0 0% 45%;
+            --tag-bg: 0 0% 93%;
+            --tag-text: 0 0% 30%;
+            --toggle-bg: 0 0% 82%;
+            --toggle-dot: 0 0% 100%;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.06), 0 4px 6px -4px rgb(0 0 0 / 0.06);
+            --header-bg: hsla(0, 0%, 100%, 0.8);
+            --header-border: 0 0% 88%;
+        }
+
+        .dark-mode {
+            --background: 0 0% 10%;
+            --foreground: 0 0% 90%;
+            --card: 0 0% 13%;
+            --card-foreground: 0 0% 90%;
+            --popover: 0 0% 13%;
+            --popover-foreground: 0 0% 90%;
+            --primary: 0 0% 75%;            /* light gray */
+            --primary-foreground: 0 0% 10%;
+            --secondary: 0 0% 18%;
+            --secondary-foreground: 0 0% 90%;
+            --muted: 0 0% 18%;
+            --muted-foreground: 0 0% 60%;
+            --accent: 0 0% 18%;
+            --accent-foreground: 0 0% 90%;
+            --destructive: 0 62% 40%;
+            --destructive-foreground: 0 0% 90%;
+            --border: 0 0% 22%;
+            --input: 0 0% 22%;
+            --ring: 0 0% 75%;
+            --leader-bg: 0 0% 16%;
+            --leader-border: 0 0% 60%;
+            --all-bg: 0 0% 14%;
+            --all-border: 0 0% 50%;
+            --reading-bg: 0 0% 12%;
+            --reading-border: 0 0% 30%;
+            --section-text: 0 0% 70%;
+            --narration-text: 0 0% 60%;
+            --tag-bg: 0 0% 20%;
+            --tag-text: 0 0% 85%;
+            --toggle-bg: 0 0% 35%;
+            --toggle-dot: 0 0% 90%;
+            --header-bg: hsla(0, 0%, 10%, 0.8);
+            --header-border: 0 0% 22%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            min-height: 100vh;
+            min-height: 100dvh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Header Bar ─────────────────────── */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid hsl(var(--header-border));
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            height: 64px;
+        }
+        .app-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+            flex-shrink: 1;
+        }
+        .app-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .app-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: hsl(var(--foreground));
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: 0.01em;
+        }
+        .app-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        /* ── Theme Toggle ──────────────────── */
+        .theme-toggle-btn {
+            background: hsl(var(--toggle-bg));
+            border: none;
+            border-radius: 24px;
+            width: 48px;
+            height: 28px;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.35s ease;
+            flex-shrink: 0;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.08);
+        }
+        .theme-toggle-btn:focus-visible {
+            outline: 2px solid hsl(var(--ring));
+            outline-offset: 2px;
+        }
+        .theme-toggle-dot {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: hsl(var(--toggle-dot));
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            line-height: 1;
+        }
+        .dark-mode .theme-toggle-dot {
+            transform: translateX(20px);
+        }
+
+        /* ── Edit Button (SVG pen icon) ────── */
+        .edit-btn {
+            background: transparent;
+            border: 1px solid hsl(var(--border));
+            color: hsl(var(--foreground));
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            -webkit-tap-highlight-color: transparent;
+            background: hsl(var(--background));
+            padding: 0;
+        }
+        .edit-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .edit-btn:hover {
+            background: hsl(var(--accent));
+            border-color: hsl(var(--primary));
+            color: hsl(var(--primary));
+        }
+        .edit-btn:focus-visible {
+            outline: 2px solid hsl(var(--ring));
+            outline-offset: 2px;
+        }
+
+        /* ── Main Container ────────────────── */
+        .main-container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+            width: 100%;
+            flex: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ── Home Screen ───────────────────── */
+        .home-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            min-height: calc(100dvh - 80px);
+            padding: 24px 16px;
+            text-align: center;
+        }
+        .home-card {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: calc(var(--radius) * 1.5);
+            padding: 36px 28px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 440px;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .home-card h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: hsl(var(--foreground));
+            letter-spacing: -0.01em;
+        }
+        .home-card .subtitle {
+            font-size: 0.95rem;
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+        .form-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: hsl(var(--foreground));
+            letter-spacing: 0.02em;
+        }
+        .gender-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .gender-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 14px 16px;
+            border: 2px solid hsl(var(--border));
+            border-radius: var(--radius);
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.03em;
+            box-shadow: var(--shadow-sm);
+        }
+        .gender-btn:hover {
+            border-color: hsl(var(--primary));
+            background: hsl(var(--accent));
+        }
+        .gender-btn.selected {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            border-color: hsl(var(--primary));
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+        .gender-btn:focus-visible {
+            outline: 2px solid hsl(var(--ring));
+            outline-offset: 2px;
+        }
+        .name-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid hsl(var(--input));
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-family: inherit;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            transition: all 0.2s ease;
+            letter-spacing: 0.02em;
+            box-shadow: var(--shadow-sm);
+        }
+        .name-input:focus {
+            outline: none;
+            border-color: hsl(var(--ring));
+            box-shadow: 0 0 0 4px hsl(var(--ring) / 0.12);
+        }
+        .name-input::placeholder {
+            color: hsl(var(--muted-foreground) / 0.6);
+        }
+        .begin-btn {
+            width: 100%;
+            padding: 16px;
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.03em;
+            margin-top: 12px;
+            box-shadow: var(--shadow-md);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .begin-btn:hover {
+            filter: brightness(0.95);
+            box-shadow: var(--shadow-lg);
+        }
+        .begin-btn:focus-visible {
+            outline: 2px solid hsl(var(--ring));
+            outline-offset: 2px;
+        }
+        .begin-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            box-shadow: none;
+            filter: none;
+        }
+        .error-msg {
+            color: hsl(var(--destructive));
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: none;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        .error-msg.visible {
+            display: block;
+        }
+
+        /* ── Prayer Screen ─────────────────── */
+        .prayer-screen {
+            display: none;
+            animation: fadeIn 0.45s ease;
+        }
+        .prayer-screen.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .deceased-info {
+            text-align: center;
+            padding: 8px 16px 18px;
+            margin-bottom: 8px;
+        }
+        .deceased-name-tag {
+            display: inline-block;
+            background: hsl(var(--tag-bg));
+            color: hsl(var(--tag-text));
+            padding: 8px 20px;
+            border-radius: 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid hsl(var(--border));
+        }
+        .deceased-pronoun-tag {
+            display: inline-block;
+            background: transparent;
+            color: hsl(var(--muted-foreground));
+            font-size: 0.85rem;
+            margin-left: 8px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        /* ── Segment Styles ─────────────────── */
+        .prayer-segment {
+            margin-bottom: 16px;
+            padding: 16px 18px;
+            border-radius: var(--radius);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.75;
+        }
+        .segment-leader {
+            background: hsl(var(--leader-bg));
+            border-left: 4px solid hsl(var(--leader-border));
+            color: hsl(var(--foreground));
+            font-weight: 500;
+            padding-left: 18px;
+            box-shadow: var(--shadow-sm);
+        }
+        .segment-leader .speaker-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: hsl(var(--primary));
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        .segment-all {
+            background: hsl(var(--all-bg));
+            border-left: 4px solid hsl(var(--all-border));
+            color: hsl(var(--foreground));
+            font-style: italic;
+            padding-left: 18px;
+            box-shadow: var(--shadow-sm);
+        }
+        .segment-all .speaker-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: hsl(var(--primary));
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-style: normal;
+        }
+        .segment-reading {
+            background: hsl(var(--reading-bg));
+            border-left: 4px solid hsl(var(--reading-border));
+            padding-left: 18px;
+            font-style: italic;
+            line-height: 1.85;
+            box-shadow: var(--shadow-sm);
+        }
+        .segment-reading-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: hsl(var(--section-text));
+            padding: 10px 0;
+            margin-bottom: 8px;
+            border: none;
+            background: transparent;
+        }
+        .segment-section {
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: hsl(var(--section-text));
+            padding: 14px 0;
+            margin: 24px 0 12px;
+            border-top: 1px solid hsl(var(--border));
+            border-bottom: 1px solid hsl(var(--border));
+            background: transparent;
+        }
+        .segment-narration {
+            text-align: center;
+            font-style: italic;
+            color: hsl(var(--narration-text));
+            font-size: 0.95rem;
+            padding: 10px 20px;
+            background: transparent;
+            letter-spacing: 0.02em;
+            border: none;
+            font-weight: 500;
+        }
+
+        /* ── Divider ────────────────────────── */
+        .soft-divider {
+            border: none;
+            border-top: 1px dashed hsl(var(--border));
+            margin: 20px 0;
+            opacity: 0.5;
+        }
+
+        /* ── Responsive ────────────────────── */
+        @media (max-width: 400px) {
+            .home-card {
+                padding: 24px 16px;
+                border-radius: var(--radius);
+            }
+            .home-card h1 {
+                font-size: 1.4rem;
+            }
+            .gender-btn {
+                padding: 12px 10px;
+                font-size: 0.9rem;
+            }
+            .name-input {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+            }
+            .begin-btn {
+                padding: 14px;
+                font-size: 1rem;
+            }
+            .prayer-segment {
+                padding: 14px 14px;
+                margin-bottom: 12px;
+                border-radius: calc(var(--radius) - 2px);
+            }
+            .segment-leader,
+            .segment-all,
+            .segment-reading {
+                padding-left: 14px;
+                border-left-width: 3px;
+            }
+            .app-title {
+                font-size: 0.85rem;
+            }
+        }
+        @media (min-width: 500px) {
+            .prayer-segment {
+                padding: 20px 24px;
+            }
+            .segment-leader,
+            .segment-all,
+            .segment-reading {
+                padding-left: 20px;
+            }
+        }
+
+        /* ── Print styles ──────────────────── */
+        @media print {
+            .app-header,
+            .edit-btn,
+            .theme-toggle-btn,
+            .deceased-info,
+            .home-screen {
+                display: none !important;
+            }
+            .prayer-screen {
+                display: block !important;
+                animation: none;
+            }
+            body {
+                background: #fff;
+                color: #000;
+                font-size: 13pt;
+            }
+            .prayer-segment {
+                break-inside: avoid;
+                box-shadow: none;
+                border-left: 2px solid #999;
+                background: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header class="app-header">
+        <div class="app-header-left">
+            <span class="app-icon">🕯️</span>
+            <span class="app-title">Prayer for the Departed</span>
+        </div>
+        <div class="app-header-right">
+            <button class="edit-btn" id="editBtn" title="Edit name or gender" style="display:none;">
+                <!-- SVG pen icon -->
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                </svg>
+            </button>
+            <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+                <span class="theme-toggle-dot" id="themeToggleDot">☀️</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ═══════════════ MAIN CONTAINER ═══════════════ -->
+    <div class="main-container">
+
+        <!-- ── HOME SCREEN ────────────────────── -->
+        <div class="home-screen" id="homeScreen">
+            <div class="home-card">
+                <h1>Prayer for the Faithful Departed</h1>
+                <p class="subtitle">Please enter the details of your loved one</p>
+                <form id="prayerForm" novalidate>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="gender-options">
+                            <button type="button" class="gender-btn" data-gender="he" id="btnHe">
+                                He / Him
+                            </button>
+                            <button type="button" class="gender-btn" data-gender="she" id="btnShe">
+                                She / Her
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nameInput">Name of the Deceased</label>
+                        <input type="text" class="name-input" id="nameInput"
+                        placeholder="Enter their name…" autocomplete="off" maxlength="60">
+                        <p class="error-msg" id="nameError">Please enter the name of your loved one.</p>
+                    </div>
+                    <button type="submit" class="begin-btn" id="beginBtn" disabled>
+                        Begin Prayer 🙏
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ── PRAYER SCREEN ──────────────────── -->
+        <div class="prayer-screen" id="prayerScreen">
+            <div class="deceased-info">
+                <span class="deceased-name-tag" id="deceasedNameTag">🕊️ </span>
+                <span class="deceased-pronoun-tag" id="deceasedPronounTag"></span>
+            </div>
+            <div id="prayerContent"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ───── DOM Refs ───────────────────
+            const homeScreen = document.getElementById('homeScreen');
+            const prayerScreen = document.getElementById('prayerScreen');
+            const prayerContent = document.getElementById('prayerContent');
+            const deceasedNameTag = document.getElementById('deceasedNameTag');
+            const deceasedPronounTag = document.getElementById('deceasedPronounTag');
+            const editBtn = document.getElementById('editBtn');
+            const themeToggle = document.getElementById('themeToggle');
+            const themeToggleDot = document.getElementById('themeToggleDot');
+            const btnHe = document.getElementById('btnHe');
+            const btnShe = document.getElementById('btnShe');
+            const nameInput = document.getElementById('nameInput');
+            const beginBtn = document.getElementById('beginBtn');
+            const nameError = document.getElementById('nameError');
+            const prayerForm = document.getElementById('prayerForm');
+
+            let selectedGender = null; // 'he' or 'she'
+            let currentName = '';
+            let pronouns = null; // { subject, object, possessive }
+
+            // ───── Helpers ─────────────────────
+            function toTitleCase(str) {
+                return str.replace(
+                    /\w\S*/g,
+                    txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                );
+            }
+
+            function capitalizeName(name) {
+                return toTitleCase(name.trim());
+            }
+
+            // ───── Theme Management ───────────
+            function applyTheme(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                    themeToggleDot.textContent = '🌙';
+                    themeToggle.setAttribute('aria-label', 'Switch to light mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    themeToggleDot.textContent = '☀️';
+                    themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+                }
+            }
+
+            function getStoredTheme() {
+                try {
+                    return localStorage.getItem('prayer-theme');
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function setStoredTheme(isDark) {
+                try {
+                    localStorage.setItem('prayer-theme', isDark ? 'dark' : 'light');
+                } catch (e) {}
+            }
+
+            // Initialize theme
+            const storedTheme = getStoredTheme();
+            let isDarkMode = storedTheme === 'dark';
+            if (storedTheme === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                isDarkMode = true;
+            }
+            applyTheme(isDarkMode);
+
+            themeToggle.addEventListener('click', () => {
+                isDarkMode = !isDarkMode;
+                applyTheme(isDarkMode);
+                setStoredTheme(isDarkMode);
+            });
+
+            if (window.matchMedia && storedTheme === null) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (getStoredTheme() === null) {
+                        isDarkMode = e.matches;
+                        applyTheme(isDarkMode);
+                    }
+                });
+            }
+
+            // ───── Gender Selection ───────────
+            function selectGender(gender) {
+                selectedGender = gender;
+                btnHe.classList.toggle('selected', gender === 'he');
+                btnShe.classList.toggle('selected', gender === 'she');
+                updateBeginBtn();
+                nameError.classList.remove('visible');
+            }
+
+            btnHe.addEventListener('click', () => selectGender('he'));
+            btnShe.addEventListener('click', () => selectGender('she'));
+
+            // ───── Name Input with auto‑capitalization ──
+            nameInput.addEventListener('blur', () => {
+                if (nameInput.value.trim() !== '') {
+                    nameInput.value = capitalizeName(nameInput.value);
+                    currentName = nameInput.value.trim();
+                    updateBeginBtn();
+                }
+            });
+
+            nameInput.addEventListener('input', () => {
+                currentName = nameInput.value.trim();
+                updateBeginBtn();
+                if (currentName.length > 0) {
+                    nameError.classList.remove('visible');
+                }
+            });
+
+            function updateBeginBtn() {
+                beginBtn.disabled = !(selectedGender && currentName.length > 0);
+            }
+
+            // ───── Pronoun Mapping ────────────
+            function getPronouns(gender) {
+                if (gender === 'he') {
+                    return { subject: 'he', object: 'him', possessive: 'his' };
+                }
+                return { subject: 'she', object: 'her', possessive: 'her' };
+            }
+
+            // ───── Build Prayer Segments ──────
+            function buildPrayerSegments(name, pr) {
+                const R = (text) => text
+                    .replace(/\{name\}/g, name)
+                    .replace(/\{subject\}/g, pr.subject)
+                    .replace(/\{object\}/g, pr.object)
+                    .replace(/\{possessive\}/g, pr.possessive);
+
+                return [
+                    { type: 'section', text: 'READINGS' },
+                    { type: 'reading-title', text: 'A Reading from the Prophet Isaiah' },
+                    {
+                        type: 'reading',
+                        text: `But now, thus says the Lord who created you;\nFear not, for I have redeemed you;\nI have called you by your name and you are mine.\nWhen you pass through the water, I will be with you;\nIn the river you shall not drown.\nWhen you walk through fire, you shall not be burned;\nThe flames shall not consume you.\nFor I am the Lord your God, your Saviour.`
+                    },
+                    { type: 'leader', text: 'This is the Word of the Lord.' },
+                    { type: 'all', text: 'Thanks be to God.' },
+                    { type: 'narration', text: 'PAUSE FOR SILENT REFLECTION THEN A SONG WILL BE PLAYED.' },
+                    { type: 'all', text: 'Amen.' },
+                    {
+                        type: 'leader',
+                        label: 'Prayer',
+                        text: R(`Lord, the loss of our beloved {name} is a weight and burden to us who mourn {object}. In this time of mourning we need to meet you who are meek and humble of heart. Give us rest for ourselves and bring {name} into your presence forever. May we all be united one day in the love of your divine heart.`)
+                    },
+                    { type: 'leader', text: 'We ask this through Christ our Lord.' },
+                    { type: 'all', text: 'Amen.' },
+                    { type: 'section', text: 'PRAYERS OF INTERCESSION' },
+                    { type: 'leader', text: 'Lord hear us.' },
+                    { type: 'all', text: 'Lord, graciously hear us.' },
+                    {
+                        type: 'leader',
+                        text: R(`As we grieve we know that at this very time others are grieving great losses too. Teach us to be sensitive to the sufferings and pains of others. Help us to take strength from the community of our brothers and sisters in the faith.`)
+                    },
+                    { type: 'leader', text: 'Lord hear us.' },
+                    { type: 'all', text: 'Lord, graciously hear us.' },
+                    {
+                        type: 'leader',
+                        text: R(`We pray for those others, whom we may not know, whom {name} touched during {possessive} life. May we all be united one day in the joy of Heaven.`)
+                    },
+                    { type: 'leader', text: 'Lord hear us.' },
+                    { type: 'all', text: 'Lord, graciously hear us.' },
+                    {
+                        type: 'leader',
+                        text: R(`We pray for anyone whom {name} offended against during {possessive} life. We pray that you will heal their hurt. Lead us all to the harmony and peace of God's children.`)
+                    },
+                    { type: 'leader', text: 'Lord hear us.' },
+                    { type: 'all', text: 'Lord, graciously hear us.' },
+                    {
+                        type: 'leader',
+                        text: 'We pray for the whole people of God. Give us all the grace, in our own neighborhood and throughout the world to be a light of truth, justice and love.'
+                    },
+                    { type: 'leader', text: 'Lord hear us.' },
+                    { type: 'all', text: 'Lord, graciously hear us.' },
+                    { type: 'narration', text: 'At this point the Leader should invite all present to voice a particular prayer.' },
+                    { type: 'leader', text: 'Let us pray together in the words that Jesus taught us.' },
+                    { type: 'all', text: 'Our Father…' },
+                    { type: 'all', text: 'Glory be to the Father…' },
+                    {
+                        type: 'leader',
+                        label: 'Prayer',
+                        text: R(`Lord God, you are compassion and love; our loved one, {name}, now gone. Welcome {object} into the love of heaven; console us in our loss and make us truly grateful for all {subject} was to us in life. Fill our home now empty with {possessive} loss with your love and care.`)
+                    },
+                    { type: 'leader', text: 'Through Christ our Lord.' },
+                    { type: 'all', text: 'Amen.' },
+                    {
+                        type: 'leader',
+                        text: R(`Lord we have loved {name} in this life and will sorely miss {object}. Out of that love we pray that you take {object} to yourself, forgive {possessive} sins and give {object} eternal joy with you.`)
+                    },
+                    { type: 'all', text: 'Amen.' },
+                    { type: 'all', text: 'Thanks be to God.' },
+                    {
+                        type: 'leader',
+                        label: 'Prayer',
+                        text: R(`Lord, we are grieving now for someone we loved and cherished. The experience of death and bereavement can stir up in us feelings of fear for the future and lack of confidence. Renew our confidence that you are always with us no matter what trials face us now or in the future.`)
+                    },
+                    { type: 'leader', text: 'We ask this through Christ our Lord.' },
+                    { type: 'all', text: 'Amen.' },
+                    {
+                        type: 'leader',
+                        label: 'Prayer',
+                        text: R(`We have known the time for planting, for laughing and for dancing. The joys of happier days can never be taken from us. Let those joys soften the pain of our suffering now. May our acceptance of this time of sadness help to prepare us for future joys with you and with {name} in your Kingdom of peace and love.`)
+                    },
+                    { type: 'leader', text: 'We ask this through Christ our Lord.' },
+                    { type: 'all', text: 'Amen.' },
+                    {
+                        type: 'leader',
+                        text: R(`We gather as family and friends who loved {name} in this life. Now that {subject} has gone from us we come into the Lord's presence to remember and give thanks for the good the Lord has done in {object} and the richness that we have received. We also ask the Lord's forgiveness for all {possessive} sins and entrust {possessive} soul to the tender mercy of God.`)
+                    },
+                    { type: 'leader', text: 'In the name of the Father and of the Son and of the Holy Spirit.' },
+                    { type: 'all', text: 'Amen.' },
+                ];
+            }
+
+            // ───── Render Prayer ──────────────
+            function renderPrayer(name, pr) {
+                const segments = buildPrayerSegments(name, pr);
+                let html = '';
+                segments.forEach((seg) => {
+                    let segmentClass = '';
+                    let innerHtml = '';
+
+                    switch (seg.type) {
+                        case 'section':
+                            segmentClass = 'segment-section';
+                            innerHtml = seg.text;
+                            break;
+                        case 'reading-title':
+                            segmentClass = 'segment-reading-title';
+                            innerHtml = seg.text;
+                            break;
+                        case 'reading':
+                            segmentClass = 'segment-reading';
+                            innerHtml = seg.text.replace(/\n/g, '<br>');
+                            break;
+                        case 'leader':
+                            segmentClass = 'segment-leader';
+                            innerHtml = seg.label
+                                ? `<span class="speaker-label">${seg.label}</span>${seg.text}`
+                                : `<span class="speaker-label">Leader</span>${seg.text}`;
+                            break;
+                        case 'all':
+                            segmentClass = 'segment-all';
+                            innerHtml = `<span class="speaker-label">All</span>${seg.text}`;
+                            break;
+                        case 'narration':
+                            segmentClass = 'segment-narration';
+                            innerHtml = seg.text;
+                            break;
+                        default:
+                            segmentClass = '';
+                            innerHtml = seg.text;
+                    }
+                    html += `<div class="prayer-segment ${segmentClass}">${innerHtml}</div>`;
+                });
+                prayerContent.innerHTML = html;
+
+                deceasedNameTag.textContent = `🕊️ ${name}`;
+                const pronounLabel = pr.subject === 'he' ? '(he / him / his)' : '(she / her / hers)';
+                deceasedPronounTag.textContent = pronounLabel;
+            }
+
+            // ───── Show / Hide Screens ─────────
+            function showPrayerScreen(name, pr) {
+                homeScreen.style.display = 'none';
+                prayerScreen.classList.add('active');
+                editBtn.style.display = 'inline-flex';
+                renderPrayer(name, pr);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                prayerContent.setAttribute('tabindex', '-1');
+                prayerContent.focus();
+            }
+
+            function showHomeScreen() {
+                prayerScreen.classList.remove('active');
+                homeScreen.style.display = '';
+                editBtn.style.display = 'none';
+                prayerContent.innerHTML = '';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (selectedGender) selectGender(selectedGender);
+                nameInput.value = currentName;
+                updateBeginBtn();
+                nameInput.focus();
+            }
+
+            // ───── Form Submission ────────────
+            prayerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                nameInput.value = capitalizeName(nameInput.value);
+                currentName = nameInput.value.trim();
+
+                if (!selectedGender || !currentName) {
+                    nameError.classList.add('visible');
+                    nameInput.focus();
+                    return;
+                }
+                nameError.classList.remove('visible');
+                pronouns = getPronouns(selectedGender);
+                showPrayerScreen(currentName, pronouns);
+            });
+
+            // ───── Edit Button ────────────────
+            editBtn.addEventListener('click', () => {
+                showHomeScreen();
+            });
+
+            // ───── Escape key ─────────────────
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && prayerScreen.classList.contains('active')) {
+                    showHomeScreen();
+                }
+            });
+
+            // Initial focus
+            btnHe.focus({ preventScroll: true });
+            console.log('🕯️ Prayer for the Faithful Departed — Ready (gray palette)');
+        })();
+    </script>
+</body>
+</html>
